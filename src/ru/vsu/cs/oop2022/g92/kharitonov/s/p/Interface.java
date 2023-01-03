@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 
 public class Interface extends JFrame implements Runnable {
 
-
     private final int SIZE;
     private final Container container;
     private final GridLayout grid;
@@ -26,10 +25,10 @@ public class Interface extends JFrame implements Runnable {
 
     private boolean boardEnabled = false;
 
-    private ImageIcon redDisc;
-    private ImageIcon redQueenDisc;
-    private ImageIcon blueDisc;
-    private ImageIcon blueQueenDisc;
+    private ImageIcon red;
+    private ImageIcon redKing;
+    private ImageIcon blue;
+    private ImageIcon blueKing;
 
     public Interface(int size)
     {
@@ -40,10 +39,10 @@ public class Interface extends JFrame implements Runnable {
         container.setLayout(grid);
         buttons = new JButton[SIZE][SIZE];
 
-        redDisc = new ImageIcon("Images/red.png");
-        redQueenDisc = new ImageIcon("Images/redKing.png");
-        blueDisc = new ImageIcon("Images/blue.png");
-        blueQueenDisc = new ImageIcon("Images/blueKing.png");
+        red = new ImageIcon("Images/red.png");
+        redKing = new ImageIcon("Images/redKing.png");
+        blue = new ImageIcon("Images/blue.png");
+        blueKing = new ImageIcon("Images/blueKing.png");
 
         for (int row = 0; row < SIZE; ++row)
             for (int col = 0; col < SIZE; ++col)
@@ -80,7 +79,7 @@ public class Interface extends JFrame implements Runnable {
         }
         catch (IOException e)
         {
-            System.err.println("Can't connect streams: " + e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         realSystemIn = System.in;
@@ -123,24 +122,22 @@ public class Interface extends JFrame implements Runnable {
                         break;
 
                     case Checkers.RED:
-                        currentImage = redDisc;
+                        currentImage = red;
                         break;
                     case Checkers.BLUE:
-                        currentImage = blueDisc;
+                        currentImage = blue;
                         break;
                     case Checkers.RED * 2:
-                        currentImage = redQueenDisc;
+                        currentImage = redKing;
                         break;
                     case Checkers.BLUE * 2:
-                        currentImage = blueQueenDisc;
+                        currentImage = blueKing;
                         break;
                 }
-
                 if (!buttons[row][col].getBackground().equals(color))
                 {
                     buttons[row][col].setBackground(color);
                 }
-
                 buttons[row][col].setIcon(currentImage);
                 buttons[row][col].repaint();
 
@@ -159,7 +156,6 @@ public class Interface extends JFrame implements Runnable {
         byte[] pushbackB = new byte[pushbackC.length];
         for (int i = 0; i < pushbackC.length;  ++i)
             pushbackB[i] = (byte) pushbackC[i];
-
         try
         {
             systemInOut.write(pushbackB);
